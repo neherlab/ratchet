@@ -1,0 +1,81 @@
+A collection of python scripts to simulate Muller's ratchet by  R.A. Neher and 
+B.I. Shraiman, released as supplementary information to the publication
+
+"Fluctuations of fitness distributions and the rate of  Muller's ratchet" 
+
+in Genetics xxxx. 
+
+All of these python scripts make use of scipy, numpy and the plotting environment
+matplotlib and the bundle pylab which is freely available at http://www.scipy.org
+Convenient free binary installers are available from enthought.com.
+
+
+SIMULATING THE MODEL
+The main routines needed for the evolution of the population are contained in
+the file "evolve_methods.py", which is interfaced by the script "ratchet.py".
+The latter accepts a host of command line arguments which allow the user to
+specify the population parameters, the runtime, the output directory and the 
+type of simulation that is being run. These options are
+
+usage: ratchet.py [-h] [--pop POP] [--lam LAM] [--sel SEL] [--sigma SIGMA]
+                  [--mu MU] [--Trun TRUN] [--Ttraj TTRAJ] [--Teq TEQ]
+                  [--poisson POISSON] [--speed] [--traj] [--dt DT]
+                  [--outdir OUTDIR]
+
+Simulate a deleterious mutation selection balance and determine the rate of
+Muller's ratchet
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --pop POP          Population size (N)
+  --lam LAM          Lambda (u/s)
+  --sel SEL          Selection strength (s)
+  --sigma SIGMA      Sigma (sqrt(u*s))
+  --mu MU            Mutation rate u
+  --Trun TRUN        Time over which the ratchet rate is measured in
+                     generations
+  --Ttraj TTRAJ      Length of trajectory in generations
+  --Teq TEQ          Equilibration time in generations
+  --poisson POISSON  Poisson [1] sampling vs multinomial [0]
+  --speed            Measure speed
+  --traj             Store trajectory
+  --dt DT            time increments of trajectory
+  --outdir OUTDIR    Directory into which output is directed
+
+
+FINDING THE MOST LIKELY PATH TO EXTINCTION
+The shape of the optimal path is only a function of lambda = u/s. This parameter,
+along with an optional argument specifying the output directory, are the only arguments
+to the program optimize_path.py. 
+
+usage: optimize_path.py [-h] [--lam LAM] [--outdir OUTDIR]
+
+Find the optimal path to extinction that minimizes the path integral action
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --lam LAM        parameter lambda, ratio of mutation rate to mutation effect
+  --outdir OUTDIR  directory into which output files are saved
+
+
+
+ANALYSIS AND PLOTTING
+Additional analysis scripts are also provided, along with the data necessary to 
+generate the plots of the paper. These scripts are best run using the interactive
+python console ipython.
+
+plot_ratchet_rate.py
+reads in the numerically determined ratchet rates and produces the figures that 
+compare the simulation data to the results of the paper.
+
+plot_correlation_functions.py
+reads in trajectories of the size of the fittest class and the mean fitness, calculates
+their correlation functions and compares them the to the analytic expressions presented in 
+the paper. The trajectory data is hundreds of MB and therefore not included in the online
+supplement, but available on request.
+
+correlation_functions.py 
+contains the definitions of the correlation function
+calculated in the paper and routines for numerical evaluation of the integrals.
+
+
